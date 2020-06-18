@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="layout_icons">
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_heart</item>
+    </integer-array>
+</resources>
