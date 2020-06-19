@@ -2,4 +2,9 @@
 <resources>
     <dimen name="sp_15">15sp</dimen>
     <dimen name="sp_18">18sp</dimen>
+
+    <!-- carousel -->
+    <dimen name="dp_180">180dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
+    <dimen name="dp_0.5">0.5dp</dimen>
 </resources>

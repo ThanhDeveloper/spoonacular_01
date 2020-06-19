@@ -4,4 +4,12 @@
         <item>@drawable/ic_home</item>
         <item>@drawable/ic_heart</item>
     </integer-array>
+
+    <integer-array name="carousel_images">
+        <item>@drawable/carousel_one</item>
+        <item>@drawable/carousel_two</item>
+        <item>@drawable/carousel_three</item>
+        <item>@drawable/carousel_four</item>
+        <item>@drawable/carousel_five</item>
+    </integer-array>
 </resources>
