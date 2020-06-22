@@ -3,4 +3,6 @@
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
     <string name="ingredient_recycler">ingredient_recycler</string>
+    <string name="title">title</string>
+    <string name="textRecipesDescription">Recipes Suggestion</string>
 </resources>
