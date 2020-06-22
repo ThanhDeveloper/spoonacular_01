@@ -3,8 +3,14 @@
     <dimen name="sp_15">15sp</dimen>
     <dimen name="sp_18">18sp</dimen>
 
-    <!-- carousel -->
-    <dimen name="dp_180">180dp</dimen>
-    <dimen name="dp_6">6dp</dimen>
     <dimen name="dp_0.5">0.5dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_60">60dp</dimen>
+    <dimen name="dp_90">90dp</dimen>
+    <dimen name="dp_180">180dp</dimen>
 </resources>
