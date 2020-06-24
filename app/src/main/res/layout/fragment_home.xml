@@ -31,4 +31,28 @@
         app:layout_constraintTop_toBottomOf="@+id/carouselView"
         app:reverseLayout="false"
         app:spanCount="2" />
+
+    <TextView
+        android:id="@+id/textRecipesDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_10"
+        android:fontFamily="@font/chewy"
+        android:text="@string/textRecipesDescription"
+        android:textColor="@color/colorRed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerIngredients" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerRecipes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textRecipesDescription"
+        app:reverseLayout="false" />
 </androidx.constraintlayout.widget.ConstraintLayout>
