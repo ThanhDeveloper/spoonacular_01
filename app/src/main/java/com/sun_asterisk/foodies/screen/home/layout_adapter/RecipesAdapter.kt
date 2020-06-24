@@ -12,18 +12,10 @@ import kotlinx.android.synthetic.main.row_recipes_layout.view.*
 class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder>() {
     private val recipes = mutableListOf<Recipes>()
 
-    fun updateData(data: List<Recipes>) {
-        recipes.clear()
-        recipes.addAll(data)
-        notifyDataSetChanged()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipesViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.row_recipes_layout, parent, false)
-        return RecipesViewHolder(
-            itemView
-        )
+        return RecipesViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) {
@@ -31,6 +23,12 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder>() 
     }
 
     override fun getItemCount() = recipes.size
+
+    fun updateData(data: List<Recipes>) {
+        recipes.clear()
+        recipes.addAll(data)
+        notifyDataSetChanged()
+    }
 
     class RecipesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

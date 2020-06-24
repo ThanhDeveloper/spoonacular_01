@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.sun_asterisk.foodies.R
-import com.sun_asterisk.foodies.data.model.Recipes
-import com.sun_asterisk.foodies.data.source.RecipesRepository
 import com.sun_asterisk.foodies.data.model.Ingredient
+import com.sun_asterisk.foodies.data.model.Product
+import com.sun_asterisk.foodies.data.model.Recipes
+import com.sun_asterisk.foodies.data.source.repository.ProductRepository
+import com.sun_asterisk.foodies.data.source.repository.RecipesRepository
 import com.sun_asterisk.foodies.screen.home.layout_adapter.IngredientsAdapter
+import com.sun_asterisk.foodies.screen.home.layout_adapter.ProductAdapter
 import com.sun_asterisk.foodies.screen.home.layout_adapter.RecipesAdapter
 import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -18,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : Fragment(), HomeContract.View {
 
     private val recipesAdapter by lazy { RecipesAdapter() }
+    private val productAdapter by lazy { ProductAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +36,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         initIngredientsRecyclerView()
         initData()
         recyclerRecipes.adapter = recipesAdapter
+        recyclerProduct.adapter = productAdapter
     }
 
     private fun initCarousel() {
@@ -70,12 +75,16 @@ class HomeFragment : Fragment(), HomeContract.View {
         info?.let { recipesAdapter.updateData(it) }
     }
 
-    override fun onGetRecipesError(exception: Exception?) {
-        Toast.makeText(this.context,exception.toString(),Toast.LENGTH_SHORT).show()
+    override fun onGetError(exception: Exception?) {
+        Toast.makeText(this.context, exception.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onGetProductSuccess(info: MutableList<Product>?) {
+        info?.let { productAdapter.updateData(it) }
     }
 
     private fun initData() {
-        val presenter = HomePresenter(RecipesRepository.instance)
+        val presenter = HomePresenter(RecipesRepository.instance, ProductRepository.instance)
         presenter.let {
             it.setView(this)
             it.onStart()
