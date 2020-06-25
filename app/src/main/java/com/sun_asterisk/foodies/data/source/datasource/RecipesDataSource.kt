@@ -1,4 +1,4 @@
-package com.sun_asterisk.foodies.data.source
+package com.sun_asterisk.foodies.data.source.datasource
 
 import com.sun_asterisk.foodies.data.model.Recipes
 import com.sun_asterisk.foodies.data.source.remote.OnFetchDataJsonListener

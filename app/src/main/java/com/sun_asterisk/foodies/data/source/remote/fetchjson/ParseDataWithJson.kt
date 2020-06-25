@@ -1,5 +1,6 @@
 package com.sun_asterisk.foodies.data.source.remote.fetchjson
 
+import com.sun_asterisk.foodies.data.model.ProductEntry
 import com.sun_asterisk.foodies.data.model.RecipesEntry
 import org.json.JSONException
 import org.json.JSONObject
@@ -48,9 +49,13 @@ class ParseDataWithJson {
 
     private fun parseJsonToObject(jsonObject: JSONObject?, keyEntity: String) : Any? =
         try {
-            if(jsonObject != null && keyEntity == RecipesEntry.OBJECT){
-                ParseJson().recipesParseJson(jsonObject)
-            } else null
+            jsonObject?.let {
+                when(keyEntity) {
+                    RecipesEntry.OBJECT -> ParseJson().recipesParseJson(jsonObject)
+                    ProductEntry.OBJECT -> ParseJson().productParseJson(jsonObject)
+                    else -> null
+                }
+            }
         } catch (e: JSONException) {
             e.printStackTrace()
             null

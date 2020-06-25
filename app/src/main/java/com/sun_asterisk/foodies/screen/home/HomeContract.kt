@@ -1,5 +1,6 @@
 package com.sun_asterisk.foodies.screen.home
 
+import com.sun_asterisk.foodies.data.model.Product
 import com.sun_asterisk.foodies.data.model.Recipes
 import com.sun_asterisk.foodies.utils.BasePresenter
 
@@ -9,7 +10,8 @@ class HomeContract {
      */
     interface View {
         fun onGetRecipesSuccess(info: MutableList<Recipes>?)
-        fun onGetRecipesError(exception: Exception?)
+        fun onGetError(exception: Exception?)
+        fun onGetProductSuccess(info: MutableList<Product>?)
     }
 
     /**
@@ -17,5 +19,6 @@ class HomeContract {
      */
     interface Presenter : BasePresenter<View> {
         fun getRecipes()
+        fun getProduct()
     }
 }
