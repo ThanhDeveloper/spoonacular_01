@@ -9,4 +9,7 @@ object Constant {
     const val BASE_QUERY = "query=vegetable&"
     const val BASE_PRODUCT_SEARCH = "food/products/search?"
     const val BASE_RECIPES_RANDOM = "recipes/random?"
+    const val KEY_INGREDIENT_NAME = "IngredientName"
+    const val KEY_INGREDIENT_IMAGE = "IngredientResID"
+    const val KEY_FIND_BY_INGREDIENT = "recipes/findByIngredients?ingredients="
 }

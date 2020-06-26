@@ -2,20 +2,18 @@ package com.sun_asterisk.foodies.data.source.repository
 
 import com.sun_asterisk.foodies.data.model.Recipes
 import com.sun_asterisk.foodies.data.source.datasource.RecipesDataSource
+import com.sun_asterisk.foodies.data.source.datasource.RecipesRelatedDataSource
 import com.sun_asterisk.foodies.data.source.remote.OnFetchDataJsonListener
-import com.sun_asterisk.foodies.data.source.remote.RecipesRemoteDatasource
 
 class RecipesRepository private constructor(private val remote: RecipesDataSource.Remote) {
-
-    private object Holder {
-        val INSTANCE = RecipesRepository(remote = RecipesRemoteDatasource.instance)
-    }
 
     fun getRecipesInfo(listener: OnFetchDataJsonListener<MutableList<Recipes>>) {
         remote.getRecipesInfo(listener)
     }
 
     companion object {
-        val instance: RecipesRepository by lazy { Holder.INSTANCE }
+        private var instance: RecipesRepository? = null
+        fun getInstance(remote: RecipesDataSource.Remote) =
+            instance ?: RecipesRepository(remote).also { instance = it }
     }
 }

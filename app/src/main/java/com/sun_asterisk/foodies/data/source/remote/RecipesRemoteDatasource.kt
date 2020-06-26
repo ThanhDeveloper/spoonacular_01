@@ -3,22 +3,18 @@ package com.sun_asterisk.foodies.data.source.remote
 import com.sun_asterisk.foodies.data.model.Recipes
 import com.sun_asterisk.foodies.data.model.RecipesEntry
 import com.sun_asterisk.foodies.data.source.datasource.RecipesDataSource
+import com.sun_asterisk.foodies.data.source.remote.base_url.BaseUrl
 import com.sun_asterisk.foodies.data.source.remote.fetchjson.GetJsonFromURL
-import com.sun_asterisk.foodies.utils.Constant
 
-class RecipesRemoteDatasource : RecipesDataSource.Remote {
-    private var baseUrl =
-        Constant.BASE_URL + Constant.BASE_RECIPES_RANDOM + Constant.BASE_NUMBER + Constant.BASE_API_KEY
-
-    private object Holder {
-        val INSTANCE = RecipesRemoteDatasource()
-    }
+class RecipesRemoteDataSource : RecipesDataSource.Remote {
 
     override fun getRecipesInfo(listener: OnFetchDataJsonListener<MutableList<Recipes>>) {
-        GetJsonFromURL(listener, RecipesEntry.OBJECT).execute(baseUrl)
+        GetJsonFromURL(RecipesEntry.OBJECT, listener).execute(BaseUrl.baseRecipesUrl)
     }
 
     companion object {
-        val instance: RecipesRemoteDatasource by lazy { Holder.INSTANCE }
+        private var instance: RecipesDataSource.Remote? = null
+        fun getInstance() =
+            instance ?: RecipesRemoteDataSource().also { instance = it }
     }
 }
