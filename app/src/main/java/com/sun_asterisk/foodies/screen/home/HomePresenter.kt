@@ -7,15 +7,10 @@ import com.sun_asterisk.foodies.data.source.remote.OnFetchDataJsonListener
 import com.sun_asterisk.foodies.data.source.repository.ProductRepository
 
 class HomePresenter internal constructor(private val recipesRepository: RecipesRepository?,
-                                         private val productRepository: ProductRepository? ) :
+                                         private val productRepository: ProductRepository?) :
     HomeContract.Presenter {
 
     private var view: HomeContract.View? = null
-
-    override fun onStart() {
-        getRecipes()
-        getProduct()
-    }
 
     override fun setView(view: HomeContract.View?) {
         this.view = view

@@ -2,6 +2,8 @@ package com.sun_asterisk.foodies.data.source.remote.fetchjson
 
 import com.sun_asterisk.foodies.data.model.ProductEntry
 import com.sun_asterisk.foodies.data.model.RecipesEntry
+import com.sun_asterisk.foodies.data.model.RecipesRelatedEntry
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -32,13 +34,13 @@ class ParseDataWithJson {
         return stringBuilder.toString()
     }
 
-    fun parseJsonToData(jsonObject: JSONObject?, keyEntity: String): Any {
+    fun parseJsonToData(keyEntity: String, jsonObject: JSONObject?): Any {
         val data = mutableListOf<Any>()
         try {
             val jsonArray = jsonObject?.getJSONArray(keyEntity)
             for (i in 0 until (jsonArray?.length() ?: 0)) {
                 val jsonObjects = jsonArray?.getJSONObject(i)
-                val item = ParseDataWithJson().parseJsonToObject(jsonObjects, keyEntity)
+                val item = ParseDataWithJson().parseJsonToObject(keyEntity, jsonObjects)
                 item?.let { data.add(it) }
             }
         } catch (e: JSONException) {
@@ -47,12 +49,27 @@ class ParseDataWithJson {
         return data
     }
 
-    private fun parseJsonToObject(jsonObject: JSONObject?, keyEntity: String) : Any? =
+    fun parseJsonToData(keyEntity: String, jsonObjectArray: JSONArray?): Any {
+        val data = mutableListOf<Any>()
+        try {
+            for (i in 0 until (jsonObjectArray?.length() ?: 0)) {
+                val jsonObjects = jsonObjectArray?.getJSONObject(i)
+                val item = ParseDataWithJson().parseJsonToObject(keyEntity, jsonObjects)
+                item?.let { data.add(it) }
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        return data
+    }
+
+    private fun parseJsonToObject(keyEntity: String, jsonObject: JSONObject?) : Any? =
         try {
             jsonObject?.let {
                 when(keyEntity) {
                     RecipesEntry.OBJECT -> ParseJson().recipesParseJson(jsonObject)
                     ProductEntry.OBJECT -> ParseJson().productParseJson(jsonObject)
+                    RecipesRelatedEntry.OBJECT -> ParseJson().recipesRelatedParseJson(jsonObject)
                     else -> null
                 }
             }

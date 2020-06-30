@@ -5,20 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.sun_asterisk.foodies.R
 import com.sun_asterisk.foodies.data.model.Ingredient
 import com.sun_asterisk.foodies.data.model.Product
 import com.sun_asterisk.foodies.data.model.Recipes
+import com.sun_asterisk.foodies.data.source.remote.ProductRemoteDataSource
+import com.sun_asterisk.foodies.data.source.remote.RecipesRemoteDataSource
 import com.sun_asterisk.foodies.data.source.repository.ProductRepository
 import com.sun_asterisk.foodies.data.source.repository.RecipesRepository
 import com.sun_asterisk.foodies.screen.home.layout_adapter.IngredientsAdapter
 import com.sun_asterisk.foodies.screen.home.layout_adapter.ProductAdapter
 import com.sun_asterisk.foodies.screen.home.layout_adapter.RecipesAdapter
+import com.sun_asterisk.foodies.screen.recipes_related.RecipesRelatedFragment
+import com.sun_asterisk.foodies.utils.Constant
+import com.sun_asterisk.foodies.utils.OnItemRecyclerViewClickListener
 import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : Fragment(), HomeContract.View {
+class HomeFragment : Fragment(), HomeContract.View, OnItemRecyclerViewClickListener<Ingredient> {
 
     private val recipesAdapter by lazy { RecipesAdapter() }
     private val productAdapter by lazy { ProductAdapter() }
@@ -32,11 +38,8 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initCarousel()
-        initIngredientsRecyclerView()
         initData()
-        recyclerRecipes.adapter = recipesAdapter
-        recyclerProduct.adapter = productAdapter
+        initView()
     }
 
     private fun initCarousel() {
@@ -67,7 +70,9 @@ class HomeFragment : Fragment(), HomeContract.View {
             )
         }
         ingredientsImages.recycle()
-        val ingredientsAdapter = IngredientsAdapter(ingredientList)
+        val ingredientsAdapter = IngredientsAdapter(ingredientList).apply {
+            registerItemRecyclerViewClickListener(this@HomeFragment)
+        }
         recyclerIngredients.adapter = ingredientsAdapter
     }
 
@@ -84,10 +89,39 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     private fun initData() {
-        val presenter = HomePresenter(RecipesRepository.instance, ProductRepository.instance)
+        val presenter = HomePresenter(
+            RecipesRepository.getInstance(RecipesRemoteDataSource.getInstance()),
+            ProductRepository.getInstance(ProductRemoteDataSource.getInstance())
+        )
         presenter.let {
             it.setView(this)
-            it.onStart()
+            it.getProduct()
+            it.getRecipes()
         }
+    }
+
+    override fun onItemClickListener(item: Ingredient?) {
+        val recipesRelatedFragment = RecipesRelatedFragment().apply {
+            arguments = bundleOf(
+                Constant.KEY_INGREDIENT_IMAGE to item?.imageResId,
+                Constant.KEY_INGREDIENT_NAME to item?.name
+            )
+        }
+        openFragment(recipesRelatedFragment)
+    }
+
+    private fun openFragment(fragment: Fragment) {
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.add(R.id.container, fragment)
+            ?.addToBackStack(null)
+            ?.commit()
+        }
+
+    private fun initView() {
+        initCarousel()
+        initIngredientsRecyclerView()
+        recyclerRecipes.adapter = recipesAdapter
+        recyclerProduct.adapter = productAdapter
     }
 }

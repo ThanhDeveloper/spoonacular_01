@@ -1,15 +1,15 @@
-package com.sun_asterisk.foodies.screen.main.layout_adapter
+package com.sun_asterisk.foodies.screen.tab_layout.layout_adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
 class ViewPagerAdapter(fm: FragmentManager) :
-    FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     private val fragmentList = mutableListOf<Fragment>()
     private val fragmentTitleList = mutableListOf<String>()
 
-    override fun getItem(position: Int) = fragmentList.get(position)
+    override fun getItem(position: Int) = fragmentList[position]
 
     override fun getCount() = fragmentList.size
 

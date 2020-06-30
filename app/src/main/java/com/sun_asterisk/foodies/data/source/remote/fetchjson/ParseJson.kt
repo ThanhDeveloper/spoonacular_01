@@ -1,9 +1,6 @@
 package com.sun_asterisk.foodies.data.source.remote.fetchjson
 
-import com.sun_asterisk.foodies.data.model.Product
-import com.sun_asterisk.foodies.data.model.ProductEntry
-import com.sun_asterisk.foodies.data.model.Recipes
-import com.sun_asterisk.foodies.data.model.RecipesEntry
+import com.sun_asterisk.foodies.data.model.*
 import org.json.JSONObject
 
 class ParseJson {
@@ -18,5 +15,12 @@ class ParseJson {
         Product(
             name = jsonObject.getString(ProductEntry.TITTLE),
             image = jsonObject.getString(ProductEntry.IMAGE)
+        )
+
+    fun recipesRelatedParseJson(jsonObject: JSONObject) =
+        RecipesRelated(
+            name = jsonObject.getString(RecipesRelatedEntry.TITTLE),
+            image = jsonObject.getString(RecipesRelatedEntry.IMAGE),
+            like = jsonObject.getInt(RecipesRelatedEntry.LIKE)
         )
 }
