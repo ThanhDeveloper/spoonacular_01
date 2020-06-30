@@ -10,4 +10,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ingredient_image">Ingredient image</string>
     <string name="text_quality">0</string>
+    <string name="actionBar_grocery">Grocery</string>
+    <string name="hint_search_product">Bean, Soy, Flowers, etc…</string>
+    <string name="text_not_found">Not found</string>
 </resources>

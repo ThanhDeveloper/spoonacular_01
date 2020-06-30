@@ -1,13 +1,13 @@
 package com.sun_asterisk.foodies.screen.tab_layout
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.sun_asterisk.foodies.R
 import com.sun_asterisk.foodies.screen.favorite.FavoriteFragment
+import com.sun_asterisk.foodies.screen.grocery.GroceryFragment
 import com.sun_asterisk.foodies.screen.home.HomeFragment
 import com.sun_asterisk.foodies.screen.tab_layout.layout_adapter.ViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_tab.*
@@ -23,7 +23,22 @@ class TabFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        setHasOptionsMenu(true)
         setupTabLayout()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        activity?.menuInflater?.inflate(R.menu.menu, menu)
+        super.onCreateOptionsMenu(menu,inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_grocery) {
+            openFragment(GroceryFragment())
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
@@ -46,6 +61,14 @@ class TabFragment : Fragment() {
         setupViewPager(viewPager)
         tabLayout.setupWithViewPager(viewPager)
         setupTabIcons()
+    }
+
+    private fun openFragment(fragment: Fragment) {
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.add(R.id.container, fragment)
+            ?.addToBackStack(null)
+            ?.commit()
     }
 
     companion object {
